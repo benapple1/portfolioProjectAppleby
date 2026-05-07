@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}{{ project.title }} | AI Portfolio{% endblock %}
 
@@ -47,7 +48,10 @@
 
             <div class="detail-section">
                 <h2>Screenshot or Visual</h2>
-                {% if project.image %}
+                {% if project.slug == "machine-learning-project-predictive-modeling-with-scikit-learn" %}
+                <img class="img-fluid rounded border" src="{% static 'images/Figure_2.png' %}"
+                    alt="Machine learning model output screenshot for {{ project.title }}">
+                {% elif project.image %}
                 <img class="img-fluid rounded border" src="{{ project.image.url }}"
                     alt="Screenshot for {{ project.title }}">
                 {% else %}
@@ -70,12 +74,6 @@
                     {% if project.demo_link %}
                     <a class="btn btn-primary" href="{{ project.demo_link }}" target="_blank" rel="noreferrer">Live
                         Demo</a>
-                    {% endif %}
-                    {% if not project.github_link %}
-                    <p class="text-muted mb-0">[ADD GITHUB LINK HERE]</p>
-                    {% endif %}
-                    {% if not project.demo_link %}
-                    <p class="text-muted mb-0">[ADD DEMO LINK HERE]</p>
                     {% endif %}
                 </div>
             </div>

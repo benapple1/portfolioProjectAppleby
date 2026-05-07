@@ -64,7 +64,7 @@ PROJECTS = [
         "role_contribution": "I wrote and ran the Python scripts for each machine learning exercise, loaded and prepared datasets, trained models, generated predictions, and created visualizations to evaluate results. My main focus was not just getting the code to run, but understanding what the model output meant and how to explain it clearly.",
         "biggest_challenge": "The biggest challenge was connecting the technical output to a clear interpretation. It was one thing to train a model or produce a plot, but the more important step was understanding what the results showed, whether the model performed well, and how to communicate that without overcomplicating it.",
         "lessons_learned": "This project helped me better understand the basic machine learning workflow: prepare the data, split it into training and testing sets, train a model, generate predictions, and evaluate the results. I also learned the difference between regression and classification problems and became more comfortable using visualizations to explain model performance.\n\nDemo note: This project was completed through local Python scripts and visual outputs. Screenshots of model results and plots are included as project visuals.",
-        "github_link": "",
+        "github_link": "https://github.com/benapple1/ml_appleby.git",
         "demo_link": "",
         "category": "machine-learning",
     },
