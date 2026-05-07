@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Projects | AI Portfolio{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container py-5">
+        <p class="eyebrow text-primary mb-2">Projects</p>
+        <h1 class="fw-bold">AI project case studies</h1>
+        <p class="lead text-muted">Each project is organized around the business problem, tools, features, personal contribution, challenge, and lesson learned.</p>
+    </div>
+</section>
+<section class="container py-4">
+    <div class="row g-4">
+        {% for project in projects %}
+            <div class="col-md-6 col-xl-4">
+                <article class="project-card h-100">
+                    <div class="project-thumb">{{ project.get_category_display }}</div>
+                    <div class="p-4">
+                        <span class="badge text-bg-light border mb-3">{{ project.tools_used|truncatechars:38 }}</span>
+                        <h2 class="h5 fw-semibold">{{ project.title }}</h2>
+                        <p class="text-muted">{{ project.summary|truncatewords:28 }}</p>
+                        <a class="btn btn-primary btn-sm" href="{{ project.get_absolute_url }}">View details</a>
+                    </div>
+                </article>
+            </div>
+        {% empty %}
+            <p class="text-muted">No projects yet. Seed the database to add the required class projects.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

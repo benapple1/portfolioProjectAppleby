@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.title }} | AI Portfolio{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container py-5">
+        <p class="eyebrow text-primary mb-2">{{ project.get_category_display }}</p>
+        <h1 class="fw-bold">{{ project.title }}</h1>
+        <p class="lead text-muted mb-0">{{ project.summary }}</p>
+    </div>
+</section>
+
+<section class="container py-4">
+    <div class="row g-4">
+        <div class="col-lg-9">
+
+            <div class="detail-section">
+                <h2>Business Problem</h2>
+                <p>{{ project.business_problem }}</p>
+            </div>
+
+            <div class="detail-section">
+                <h2>Tools Used</h2>
+                <p>{{ project.tools_used }}</p>
+            </div>
+
+            <div class="detail-section">
+                <h2>Key Features</h2>
+                <p>{{ project.key_features|linebreaksbr }}</p>
+            </div>
+
+            <div class="detail-section">
+                <h2>My Role / Contribution</h2>
+                <p>{{ project.role_contribution }}</p>
+            </div>
+
+            <div class="detail-section">
+                <h2>Biggest Challenge</h2>
+                <p>{{ project.biggest_challenge }}</p>
+            </div>
+
+            <div class="detail-section">
+                <h2>What I Learned</h2>
+                <p>{{ project.lessons_learned }}</p>
+            </div>
+
+            <div class="detail-section">
+                <h2>Screenshot or Visual</h2>
+                {% if project.image %}
+                <img class="img-fluid rounded border" src="{{ project.image.url }}"
+                    alt="Screenshot for {{ project.title }}">
+                {% else %}
+                <div class="visual-placeholder">
+                    <span>{{ project.get_category_display }}</span>
+                    <strong>{{ project.title }}</strong>
+                    <small>[REPLACE WITH MY SCREENSHOT] Add a screenshot, workflow diagram, model results image, or demo
+                        visual for this project.</small>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="detail-section">
+                <h2>Links</h2>
+                <div class="d-flex flex-wrap gap-2">
+                    {% if project.github_link %}
+                    <a class="btn btn-outline-primary" href="{{ project.github_link }}" target="_blank"
+                        rel="noreferrer">GitHub Repository</a>
+                    {% endif %}
+                    {% if project.demo_link %}
+                    <a class="btn btn-primary" href="{{ project.demo_link }}" target="_blank" rel="noreferrer">Live
+                        Demo</a>
+                    {% endif %}
+                    {% if not project.github_link %}
+                    <p class="text-muted mb-0">[ADD GITHUB LINK HERE]</p>
+                    {% endif %}
+                    {% if not project.demo_link %}
+                    <p class="text-muted mb-0">[ADD DEMO LINK HERE]</p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}
