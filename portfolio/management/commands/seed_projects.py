@@ -56,14 +56,14 @@ PROJECTS = [
         "category": "media",
     },
     {
-        "title": "Machine Learning Project using scikit-learn",
-        "summary": "[REPLACE WITH YOUR ONE-SENTENCE SUMMARY] Example: I trained a scikit-learn model to make predictions from a dataset and explain the results in business language.",
-        "business_problem": "[REPLACE WITH THE REAL DATA PROBLEM] Explain what decision the model supports, who would use the prediction, and why the result matters.",
-        "tools_used": "[REPLACE WITH YOUR ACTUAL TOOLS] Example: Python, pandas, scikit-learn, train-test split, accuracy score, confusion matrix, Jupyter Notebook.",
-        "key_features": "[REPLACE WITH YOUR REAL FEATURES]\nFeature 1: Describe the dataset and target variable.\nFeature 2: Describe cleaning, feature selection, or model training.\nFeature 3: Describe the metric or evaluation result.\nInterview talking point: Explain what the model result means and what its limitations are.",
-        "role_contribution": "[REPLACE WITH WHAT YOU PERSONALLY DID] Mention how you prepared the data, trained the model, evaluated performance, and explained the result.",
-        "biggest_challenge": "[REPLACE WITH YOUR BIGGEST CHALLENGE] Example: cleaning data, choosing features, understanding model metrics, or avoiding overfitting.",
-        "lessons_learned": "[REPLACE WITH WHAT YOU LEARNED] Focus on data preparation, fair evaluation, model limitations, and communicating technical results clearly.",
+        "title": "Machine Learning Project: Predictive Modeling with scikit-learn",
+        "summary": "A collection of beginner machine learning exercises using scikit-learn to practice regression, classification, model evaluation, and data visualization.",
+        "business_problem": "Many business decisions depend on identifying patterns in data and using those patterns to make informed predictions. This project focused on learning how machine learning models can be used to analyze structured datasets, evaluate model performance, and communicate results in a way that supports decision-making.",
+        "tools_used": "Python, scikit-learn, pandas, matplotlib, seaborn, NumPy",
+        "key_features": "Built regression models using datasets such as Auto MPG and California Housing.\nUsed linear regression to compare predicted outcomes against actual values.\nCreated scatterplots and actual vs. predicted visualizations to evaluate model fit.\nBuilt a KNN classification model using the Iris dataset.\nEvaluated classification performance with predicted vs. expected labels and a confusion matrix.\nPracticed train/test splitting, model fitting, prediction, and basic model evaluation.",
+        "role_contribution": "I wrote and ran the Python scripts for each machine learning exercise, loaded and prepared datasets, trained models, generated predictions, and created visualizations to evaluate results. My main focus was not just getting the code to run, but understanding what the model output meant and how to explain it clearly.",
+        "biggest_challenge": "The biggest challenge was connecting the technical output to a clear interpretation. It was one thing to train a model or produce a plot, but the more important step was understanding what the results showed, whether the model performed well, and how to communicate that without overcomplicating it.",
+        "lessons_learned": "This project helped me better understand the basic machine learning workflow: prepare the data, split it into training and testing sets, train a model, generate predictions, and evaluate the results. I also learned the difference between regression and classification problems and became more comfortable using visualizations to explain model performance.\n\nDemo note: This project was completed through local Python scripts and visual outputs. Screenshots of model results and plots are included as project visuals.",
         "github_link": "",
         "demo_link": "",
         "category": "machine-learning",
@@ -83,14 +83,29 @@ PROJECTS = [
     },
 ]
 
+PROJECT_TITLE_ALIASES = {
+    "Machine Learning Project: Predictive Modeling with scikit-learn": "Machine Learning Project using scikit-learn",
+}
+
 
 class Command(BaseCommand):
     help = "Seed the portfolio with the six required AI course projects."
 
     def handle(self, *args, **options):
         for project in PROJECTS:
-            Project.objects.update_or_create(
-                title=project["title"],
-                defaults=project,
-            )
+            old_title = PROJECT_TITLE_ALIASES.get(project["title"])
+            existing_project = None
+            if old_title:
+                existing_project = Project.objects.filter(title=old_title).first()
+
+            if existing_project:
+                for field, value in project.items():
+                    setattr(existing_project, field, value)
+                existing_project.slug = ""
+                existing_project.save()
+            else:
+                Project.objects.update_or_create(
+                    title=project["title"],
+                    defaults=project,
+                )
         self.stdout.write(self.style.SUCCESS(f"Seeded {len(PROJECTS)} projects."))
