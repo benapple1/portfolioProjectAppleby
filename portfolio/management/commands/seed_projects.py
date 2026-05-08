@@ -4,28 +4,15 @@ from portfolio.models import Project
 
 PROJECTS = [
     {
-        "title": "Chatbot Project",
-        "summary": "[REPLACE WITH YOUR ONE-SENTENCE SUMMARY] Example: I built a chatbot prototype that answers common questions and shows how prompt design can support faster customer or student support.",
-        "business_problem": "[REPLACE WITH THE REAL PROBLEM YOUR CHATBOT SOLVES] Explain who the user is, what repeated question or support issue they have, and why an AI chatbot would create business or campus value.",
-        "tools_used": "[REPLACE WITH YOUR ACTUAL TOOLS] Example: Python, prompt engineering, OpenAI API concepts, Streamlit or notebook, test prompts.",
-        "key_features": "[REPLACE WITH YOUR REAL FEATURES]\nFeature 1: Describe the main chatbot function.\nFeature 2: Describe how the chatbot handles unclear questions.\nFeature 3: Describe any prompt, memory, evaluation, or user interface feature.\nInterview talking point: Explain how these features improve speed, consistency, or user experience.",
-        "role_contribution": "[REPLACE WITH WHAT YOU PERSONALLY DID] Mention how you planned the use case, wrote prompts, tested responses, revised the flow, and prepared the project for presentation.",
-        "biggest_challenge": "[REPLACE WITH YOUR BIGGEST CHALLENGE] Example: keeping the chatbot helpful while preventing off-topic or unreliable answers.",
-        "lessons_learned": "[REPLACE WITH WHAT YOU LEARNED] Focus on prompt iteration, testing, guardrails, user needs, and explaining AI limitations in a professional way.",
-        "github_link": "",
-        "demo_link": "",
-        "category": "agent",
-    },
-    {
-        "title": "n8n Agent Workflow Project",
-        "summary": "[REPLACE WITH YOUR ONE-SENTENCE SUMMARY] Example: I created an n8n workflow that uses AI to automate a repeated business task from trigger to follow-up.",
-        "business_problem": "[REPLACE WITH THE REAL WORKFLOW PROBLEM] Explain the manual process, who loses time, what gets delayed, and how automation could improve consistency or productivity.",
-        "tools_used": "[REPLACE WITH YOUR ACTUAL TOOLS] Example: n8n, webhook trigger, AI agent node, Gmail/Slack/Sheets integration, API request, test data.",
-        "key_features": "[REPLACE WITH YOUR REAL FEATURES]\nFeature 1: Describe the trigger that starts the workflow.\nFeature 2: Describe the AI decision or classification step.\nFeature 3: Describe the automated action or notification.\nInterview talking point: Explain where automation saves time or reduces errors.",
-        "role_contribution": "[REPLACE WITH WHAT YOU PERSONALLY DID] Mention how you designed the process, configured nodes, tested sample inputs, and documented the workflow.",
-        "biggest_challenge": "[REPLACE WITH YOUR BIGGEST CHALLENGE] Example: handling incomplete input, connecting tools correctly, or debugging workflow steps.",
-        "lessons_learned": "[REPLACE WITH WHAT YOU LEARNED] Focus on process mapping, workflow testing, API thinking, and connecting AI automation to business value.",
-        "github_link": "",
+        "title": "n8n Multi-Agent Handyman Workflow Project",
+        "summary": "Built a multi-agent business workflow in n8n that simulates an automated handyman operations desk using Gemini-powered agents and workflow orchestration.",
+        "business_problem": "Small service businesses often spend significant time manually handling customer intake, pricing estimates, scheduling, and communication. This project explored how a multi-agent AI workflow could automate much of that operational process by routing customer requests through specialized agents that each handle a different business function.",
+        "tools_used": "n8n Cloud, Google Gemini API, JavaScript, HTTP Requests, Webhooks, Prompt Engineering",
+        "key_features": "Multi-agent workflow orchestration.\nAI-powered customer intake extraction.\nRules-based pricing estimation.\nScheduling workflow using external time APIs.\nAutomated customer communication drafting.\nWebhook-based workflow triggers.\nJSON parsing and validation handling.\nInter-agent communication through HTTP requests.",
+        "role_contribution": "I built and configured the multi-agent workflow structure inside n8n using drag-and-drop automation nodes, HTTP requests, JavaScript logic, and Gemini integrations. I worked through how agents communicate with one another, how structured JSON outputs are passed between workflows, and how orchestration logic can automate a multi-step business process.",
+        "biggest_challenge": "One of the biggest challenges was handling structured JSON outputs reliably between workflows, especially when Gemini responses occasionally returned invalid formatting or markdown-wrapped JSON. Managing data flow between agents and debugging webhook payloads also required careful testing and iteration.",
+        "lessons_learned": "This project helped me better understand how multi-agent systems can coordinate specialized tasks inside a larger automation pipeline. I also gained experience working with workflow orchestration, API integrations, structured AI outputs, and business process automation using low-code tools.",
+        "github_link": "https://github.com/benapple1/Handyman2.git",
         "demo_link": "",
         "category": "automation",
     },
@@ -85,6 +72,7 @@ PROJECTS = [
 
 PROJECT_TITLE_ALIASES = {
     "Machine Learning Project: Predictive Modeling with scikit-learn": "Machine Learning Project using scikit-learn",
+    "n8n Multi-Agent Handyman Workflow Project": "n8n Agent Workflow Project",
 }
 
 
@@ -92,6 +80,10 @@ class Command(BaseCommand):
     help = "Seed the portfolio with the six required AI course projects."
 
     def handle(self, *args, **options):
+        active_titles = {project["title"] for project in PROJECTS}
+        alias_titles = set(PROJECT_TITLE_ALIASES.values())
+        Project.objects.exclude(title__in=active_titles | alias_titles).delete()
+
         for project in PROJECTS:
             old_title = PROJECT_TITLE_ALIASES.get(project["title"])
             existing_project = None

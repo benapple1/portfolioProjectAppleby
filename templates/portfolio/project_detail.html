@@ -46,23 +46,25 @@
                 <p>{{ project.lessons_learned }}</p>
             </div>
 
-            <div class="detail-section">
-                <h2>Screenshot or Visual</h2>
-                {% if project.slug == "machine-learning-project-predictive-modeling-with-scikit-learn" %}
-                <img class="img-fluid rounded border" src="{% static 'images/Figure_2.png' %}"
-                    alt="Machine learning model output screenshot for {{ project.title }}">
-                {% elif project.image %}
-                <img class="img-fluid rounded border" src="{{ project.image.url }}"
-                    alt="Screenshot for {{ project.title }}">
-                {% else %}
-                <div class="visual-placeholder">
-                    <span>{{ project.get_category_display }}</span>
-                    <strong>{{ project.title }}</strong>
-                    <small>[REPLACE WITH MY SCREENSHOT] Add a screenshot, workflow diagram, model results image, or demo
-                        visual for this project.</small>
+            {% if project.slug != "n8n-multi-agent-handyman-workflow-project" and project.slug != "n8n-agent-workflow-project" %}
+                <div class="detail-section">
+                    <h2>Screenshot or Visual</h2>
+                    {% if project.slug == "machine-learning-project-predictive-modeling-with-scikit-learn" %}
+                    <img class="img-fluid rounded border" src="{% static 'images/Figure_2.png' %}"
+                        alt="Machine learning model output screenshot for {{ project.title }}">
+                    {% elif project.image %}
+                    <img class="img-fluid rounded border" src="{{ project.image.url }}"
+                        alt="Screenshot for {{ project.title }}">
+                    {% else %}
+                    <div class="visual-placeholder">
+                        <span>{{ project.get_category_display }}</span>
+                        <strong>{{ project.title }}</strong>
+                        <small>[REPLACE WITH MY SCREENSHOT] Add a screenshot, workflow diagram, model results image, or demo
+                            visual for this project.</small>
+                    </div>
+                    {% endif %}
                 </div>
-                {% endif %}
-            </div>
+            {% endif %}
 
             <div class="detail-section">
                 <h2>Links</h2>

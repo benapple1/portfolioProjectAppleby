@@ -14,7 +14,6 @@ A professional Django portfolio website for a final AI class project. The site p
 
 ## Projects Included
 
-- Chatbot Project
 - n8n Agent Workflow Project
 - LangChain Agent Project
 - Google AI Studio Media Project
