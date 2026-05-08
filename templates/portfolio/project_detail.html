@@ -51,9 +51,6 @@
                 {% if project.slug == "machine-learning-project-predictive-modeling-with-scikit-learn" %}
                 <img class="img-fluid rounded border" src="{% static 'images/Figure_2.png' %}"
                     alt="Machine learning model output screenshot for {{ project.title }}">
-                {% elif project.slug == "langchain-agent-project" %}
-                <img class="img-fluid rounded border" src="{% static 'images/langchain_screenshot.png' %}"
-                    alt="LangChain project screenshot for {{ project.title }}">
                 {% elif project.image %}
                 <img class="img-fluid rounded border" src="{{ project.image.url }}"
                     alt="Screenshot for {{ project.title }}">
